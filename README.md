@@ -31,8 +31,65 @@ Only one of the two variables pos or grammar should be affected. It depends on t
 
 - grammatical pattern with word limit : grammar="NP: {<ADJ>*<NOUN|PROPN>+}", pos=None and  maximum_word_number=3
 """
+
 extractor.candidate_selection(pos={'NOUN', 'PROPN', 'ADJ'}, 
                               grammar=None, 
                               maximum_word_number=0, #maximum number of words composing the keyword. 0 means no limit.
                               stoplist=None)
+                              
+                              
+#Load word2vec model (here the pre-trained by google)
+
+import gensim.models as g
+
+model = g.KeyedVectors.load_word2vec_format('paht/to/word2vecmodel/GoogleNews-vectors-negative300.bin', binary=True)
+
+#keyphrases ranking
+
+"""
+Value of embedding: “word2vec”, “glove”, and “doc2vec”
+
+Value of variable typ : 1, 2, and 3
+
+1 – weighting with co-occurrence only. When typ = 1, then the variables d2v, glove and w2v are all equal to None
+2 – weighting with the combination of co-occurrence and word/sentence embedding
+3 – weighting with word/sentence embedding only
+"""
+
+extractor.candidate_weighting(window=2, #co-occurrence window
+                              pos=None, #optional
+                              embedding=None, #type of embedding model
+                              model=model, #instance of embedding model.
+                              typ = 2, #type of weighting. Default 1. The other possible values are 2 and 3,
+                              alpha = 0.3, #alpha parameter. alpha = 1 means that the candidate's score is the average of the scores of the words that compose it
+                              beta = 0.3, #beta parameter
+                              centrality='degree_centrality', #Centrality measure to use
+                              kwargs=None) #specific variable of the centrality measure. See networkx.
+
+#get the 10-highest scored candidates as keyphrases
+keyphrases = extractor.get_n_best(n=10)
+```
+## Example of loading glove (here pre-trained given by stanford)
+
+```python
+def load_glove_model(glove_file, size):
+    print("Loading Glove Model")
+    f = open(glove_file, 'r')
+    model = {}
+    vector_size = size
+    for line in f:
+        split_line = line.split()
+        word = " ".join(split_line[0:len(split_line) - vector_size])
+        embedding = np.array([float(val) for val in split_line[-vector_size:]])
+        model[word] = embedding
+    print("Done.\n" + str(len(model)) + " words loaded!")
+    return model
+
+model = load_glove_model(glove_model_path+"glove.6B.50d.txt",50)
+
+```
+
+## Example of loading doc2vec (here pre-trained on wikipedia) :
+```python
+model = g.Doc2Vec.load("path/to/doc2vec.bin")
 ```
