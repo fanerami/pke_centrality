@@ -16,6 +16,8 @@ In the file test.py is an example on how to use the centrality keyphrases extrac
 The following shows how to use centrality.py for keyphrases extraction.
 
 ```python
+from pke.unsupervised import Centrality
+
 #Create the method
 
 extractor = Centrality()
