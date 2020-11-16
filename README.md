@@ -93,3 +93,90 @@ model = load_glove_model(glove_model_path+"glove.6B.50d.txt",50)
 ```python
 model = g.Doc2Vec.load("path/to/doc2vec.bin")
 ```
+
+# PARAMETERS ON SOME BENCHMARK DATASET
+
+*INSPEC :
+
+- normalization : "stemming"
+-cadidate selection : pos={'NOUN', 'PROPN', 'ADJ'}, grammar=None
+- window :  6
+- embedding : "word2vec"
+- typ : 3
+- alpha : 0.5
+- beta : 0.1
+- centrality : closeness_centrality
+- kwargs : {'distance':'inv_weight', 'wf_improved':False}
+
+*TALN-Archives, KDD and WWW :
+
+- normalization : "stemming"
+-cadidate selection : pos={'NOUN', 'PROPN', 'ADJ'}, grammar=None
+- window :  9
+- embedding : None
+- typ : 1
+- alpha : 0.1
+- beta : 0.1
+- centrality : eigenvector_centrality_numpy
+- kwargs : {'weight':'weight'}
+
+*Semeval :
+
+- normalization : "stemming"
+-cadidate selection : pos={'NOUN', 'PROPN', 'ADJ'}, grammar=None
+- window :  7
+- embedding : "word2vec"
+- typ : 3
+- alpha : 0.4
+- beta : 0.3
+- centrality : closeness_centrality
+- kwargs : {'distance':'inv_weight', 'wf_improved':False}
+
+*NUS, PubMed and ACM :
+
+- normalization : "stemming"
+-cadidate selection : grammar="NP: {<ADJ>*<NOUN|PROPN>+}", pos=None and  maximum_word_number=3
+- window :  9
+- embedding : None
+- typ : 1
+- alpha : 0.1
+- beta : 0.8
+- centrality : degree_centrality
+- kwargs : None
+
+*Citeulike-180 :
+
+- normalization : "stemming"
+-cadidate selection : grammar="NP: {<ADJ>*<NOUN|PROPN>+}", pos=None and  maximum_word_number=3
+- window :  2
+- embedding : None
+- typ : 1
+- alpha : 0.6
+- beta : 0.3
+- centrality : betweenness_centrality
+- kwargs : {'weight':'inv_weight', 'normalized':False}
+
+*500N-KPCrowd :
+
+- normalization : "stemming"
+-cadidate selection : grammar="NP: {<ADJ>*<NOUN|PROPN>+}", pos=None and  maximum_word_number=3
+- window :  10
+- embedding : “word2vec”
+- typ : 2
+- alpha : 0.9
+- beta : 0.9
+- centrality : eigenvector_centrality_numpy
+- kwargs : {'weight':'weight'}
+
+
+*DUC-2001 :
+
+- normalization : "stemming"
+-cadidate selection : grammar="NP: {<ADJ>*<NOUN|PROPN>+}", pos=None and  maximum_word_number=3
+- window :  8
+- embedding : None
+- typ : 1
+- alpha : 0.9
+- beta : 0.9
+- centrality : hits_numpy
+- kwargs : None
