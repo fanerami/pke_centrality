@@ -11,7 +11,9 @@ from pke.unsupervised.graph_based.centrality import Centrality
 
 ## How to use (pipeline et arguments)
 
-In the file test.py is an example on how to use the centrality keyphrases extraction
+In the file test.py is an example on how to use the centrality keyphrases extraction.
+
+The following shows how to use centrality.py for keyphrases extraction.
 
 ```python
 #Create the method
